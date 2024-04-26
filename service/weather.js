@@ -1,9 +1,11 @@
-'use strict';
+'use strict';;
 const axios = require('axios');
 const getAPIKey = require('./api');
-const AWS = require('aws-sdk');
 
-const dynamoDB = new AWS.DynamoDB.DocumentClient();
+const { DynamoDBDocument } = require('@aws-sdk/lib-dynamodb');
+const { DynamoDB } = require('@aws-sdk/client-dynamodb');
+
+const dynamoDB = DynamoDBDocument.from(new DynamoDB());
 const TABLE_NAME = `${process.env.STAGE}-WeatherCacheTable`;
 
 const getWeatherData = async ({ latitude, longitude }) => {
@@ -17,7 +19,7 @@ const getWeatherData = async ({ latitude, longitude }) => {
     },
   };
   try {
-    const { Item } = await dynamoDB.get(params).promise();
+    const { Item } = await dynamoDB.get(params);
 
     console.log({ Item });
 
@@ -52,7 +54,7 @@ const getWeatherData = async ({ latitude, longitude }) => {
         expiresAt: Date.now() + 3600 * 1000,
       },
     };
-    await dynamoDB.put(putParams).promise();
+    await dynamoDB.put(putParams);
 
     return extractedData;
   } catch (err) {
