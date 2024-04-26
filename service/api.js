@@ -1,17 +1,16 @@
 'use strict';
-const AWS = require('aws-sdk');
+const { SSM } = require('@aws-sdk/client-ssm');
 
 const getAPIKey = async (apiKeyName) => {
   let apiKey;
   try {
     if (process.env.NODE_ENV === 'production') {
-      const ssm = new AWS.SSM();
+      const ssm = new SSM();
       const parameter = await ssm
         .getParameter({
           Name: apiKeyName,
           WithDecryption: true,
-        })
-        .promise();
+        });
       apiKey = parameter.Parameter.Value;
     } else {
       apiKey = process.env[apiKeyName];
