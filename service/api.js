@@ -6,11 +6,10 @@ const getAPIKey = async (apiKeyName) => {
   try {
     if (process.env.NODE_ENV === 'production') {
       const ssm = new SSM();
-      const parameter = await ssm
-        .getParameter({
-          Name: apiKeyName,
-          WithDecryption: true,
-        });
+      const parameter = await ssm.getParameter({
+        Name: apiKeyName,
+        WithDecryption: true,
+      });
       apiKey = parameter.Parameter.Value;
     } else {
       apiKey = process.env[apiKeyName];
