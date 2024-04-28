@@ -20,11 +20,17 @@ module.exports.hello = async (event) => {
 };
 
 module.exports.getWeather = async (event) => {
+  console.log(event);
+
   const message = await getWeatherData(event);
   console.log(message);
 
   return {
     statusCode: 200,
+    headers: {
+      'Access-Control-Allow-Origin': 'https://dev-dongjin.github.io',
+      'Access-Control-Allow-Methods': 'OPTIONS,GET',
+    },
     body: JSON.stringify(
       {
         message,

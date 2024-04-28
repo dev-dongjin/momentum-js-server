@@ -9,7 +9,8 @@ const dynamoDB = DynamoDBDocument.from(new DynamoDB());
 const TABLE_NAME = `${process.env.STAGE}-WeatherCacheTable`;
 
 const getWeatherData = async (event) => {
-  const { latitude, longitude } = event.queryStringParameters;
+  const latitude = Number(event.queryStringParameters.latitude);
+  const longitude = Number(event.queryStringParameters.longitude);
   // return;
   const params = {
     TableName: TABLE_NAME,
@@ -18,6 +19,7 @@ const getWeatherData = async (event) => {
       longitude,
     },
   };
+  console.log({ params });
   try {
     const { Item } = await dynamoDB.get(params);
 

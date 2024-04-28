@@ -70,6 +70,3 @@ functions:
           cors:
             origins:
               - 'https://dev-dongjin.github.io'
-            headers:
-              - Content-Type
-            allowCredentials: false
