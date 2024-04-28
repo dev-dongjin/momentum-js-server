@@ -4,7 +4,7 @@ const { SSM } = require('@aws-sdk/client-ssm');
 const getAPIKey = async (apiKeyName) => {
   let apiKey;
   try {
-    if (process.env.NODE_ENV === 'production') {
+    if (process.env.NODE_ENV === 'prod') {
       const ssm = new SSM();
       const parameter = await ssm.getParameter({
         Name: apiKeyName,
