@@ -59,8 +59,6 @@ resources:
           WriteCapacityUnits: 5
 
 functions:
-  hello:
-    handler: handler.hello
   getWeather:
     handler: handler.getWeather
     events:
